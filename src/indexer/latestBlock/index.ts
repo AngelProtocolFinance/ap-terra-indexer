@@ -6,7 +6,7 @@ import cacheMissedBlocks from "../missedIndexes/caching_local/cacheMissedBlocks"
 import indexTxs from "./indexTxs";
 import { state } from "../../app";
 import makeTable from "../../helpers/makeTable";
-import { BLOCK_ENDPOINT } from "../../constants/endpoints";
+import { BLOCK_ENDPOINT, LCD_API_KEY } from "../../constants/endpoints";
 
 let latest_block_height: number = Number.NEGATIVE_INFINITY;
 
@@ -14,7 +14,11 @@ export default async function indexLatestBlock () {
     let block_data: any;
 
     try {
-        block_data = await axios.get(`${BLOCK_ENDPOINT}/latest`);
+        block_data = await axios.get(`${BLOCK_ENDPOINT}/latest`, {
+            headers: {
+                Authorization: LCD_API_KEY
+            }
+        });
     } catch { return };
     /* 
     * 1 second job schedule, 6+ fetch opportunities per block

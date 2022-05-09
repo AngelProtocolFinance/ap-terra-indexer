@@ -3,7 +3,7 @@ import { Tx } from "@terra-money/terra.js";
 import { createHash } from "crypto";
 import axios from "axios";
 import { delay } from "../helpers/delay";
-import { TX_ENDPOINT } from "../constants/endpoints";
+import { LCD_API_KEY, TX_ENDPOINT } from "../constants/endpoints";
 
 type Decoded = {
     decoded_tx: Tx;
@@ -34,7 +34,11 @@ async function getEventLog (tx_hash: string) {
     await delay(1000); //Buffer so that this func doesn't spam LCD.
 
     try {
-        return await axios.get(`${TX_ENDPOINT}/${tx_hash}`);
+        return await axios.get(`${TX_ENDPOINT}/${tx_hash}`, {
+            headers: {
+                Authorization: LCD_API_KEY
+            }
+        });
         // const event_log = full_log?.tx_response?.logs[0].events ?? [];
         // return event_log;
     } catch {
