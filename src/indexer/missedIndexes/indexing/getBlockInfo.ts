@@ -4,7 +4,7 @@ import { delay } from "../../../helpers/delay";
 
 export default async function getBlockInfo (block_height: number) {
     try {
-        return await axios.get(`${BLOCK_ENDPOINT}/${block_height}`, , {
+        return await axios.get(`${BLOCK_ENDPOINT}/${block_height}`, {
             headers: {
                 Authorization: LCD_API_KEY
             }
