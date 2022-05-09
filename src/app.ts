@@ -2,7 +2,6 @@ import chalk from "chalk";
 import mongoose from "mongoose";
 import cron from "node-cron";
 import express from "express";
-import indexChainState from "./indexer/chainState";
 import indexLatestBlock from "./indexer/latestBlock";
 import indexMissedBlocks from "./indexer/missedIndexes/indexing/indexMissedBlocks";
 import indexMissedIndexes from "./indexer/missedIndexes/indexing/indexMissedIndexes";
@@ -33,7 +32,6 @@ app.listen(3000, () => {
         process.exit(0);
     } finally {
         console.log(chalk.blueBright("Step 3: "), "Indexer Starting...");
-        // cron.schedule("*/1 * * * * *", indexChainState);
         cron.schedule("*/1 * * * * *", indexLatestBlock);
     
         // /* Missed Data Collectors */
